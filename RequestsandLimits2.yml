@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    type: proxy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: proxy
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+       type: proxy
+    spec:
+     containers:
+      - name: mynginx
+        image: nginx
+        ports:
+         - containerPort: 80
+           hostPort: 8080
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "64m"
+          limits:
+            memory: "200Mi"
+            cpu: "128m"
+...
+ 
+
+
+
+
+
