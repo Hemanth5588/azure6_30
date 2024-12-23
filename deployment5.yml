@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-deployment
+  labels:
+    app: ci-cd
+    author: intelliqit
+spec:
+  replicas: 2
+  selector:
+   matchLabels:
+     app: ci-cd
+     author: intelliqit
+  template:
+    metadata:
+      name: jenkins-pod
+      labels:
+        app: ci-cd
+        author: intelliqit
+    spec:
+      containers:
+       - name: myjenkins
+         image: jenkins/jenkins
+...
+
