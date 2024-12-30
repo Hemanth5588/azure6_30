@@ -1,0 +1,57 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  clusterIP: None
+  ports:
+    - port: 3306
+      name: mysql
+      protocol: TCP
+      targetPort: 3306
+  selector:
+   app: mysql
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-statefulset
+  labels:
+   app: mysql
+spec:
+  replicas: 2
+  serviceName: mysql
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+       - name: mydb
+         image: mysql
+         env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: intelliqit
+         volumeMounts:
+          - name: my-volume
+            mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+     - metadata:
+        name: my-volume
+       spec:
+         accessModes: ["ReadWriteOnce"]
+         resources:
+           requests:
+             storage: 1Gi
+...
+
+
+
+
+
