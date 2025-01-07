@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+     labels:
+       app: mysql
+    spec:
+     containers:
+      - name: mysql
+        image: mysql
+        env:
+         - name: MYSQL_ROOT_PASSWORD
+           value: intelliqit
+         - name: MYSQL_DATABASE
+           value: mydatabase
+         - name: MYSQL_USER
+           value: myuser
+         - name: MYSQL_PASSWORD
+           value: mypassword
+        ports:
+          - containerPort: 3306
+        volumeMounts:
+         - name: mysql-volume
+           mountPath: /var/lib/mysql
+     volumes:
+      - name:  mysql-volume
+        persistentVolumeClaim:
+          claimName: my-pvc
+...
+
+
+
+
+
+
+

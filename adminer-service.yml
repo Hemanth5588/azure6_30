@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminer
+spec:
+  type: LoadBalancer
+  ports:
+   - port: 80
+     targetPort: 8080
+     nodePort: 30008
+  selector:
+    app: adminer
+...
+
